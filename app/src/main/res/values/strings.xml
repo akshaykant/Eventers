@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">"Eventers "</string>
     <string name="sign_out">SIGN OUT</string>
+    <string name="event_name">EVENT</string>
+    <string name="hint_event_type">Category</string>
+    <string name="when">WHEN</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_time">Time</string>
+    <string name="event_location">WHERE</string>
+    <string name="hint_location">Location</string>
+    <string name="event_dress">DRESS CODE</string>
+    <string name="hint_style">Style</string>
 </resources>

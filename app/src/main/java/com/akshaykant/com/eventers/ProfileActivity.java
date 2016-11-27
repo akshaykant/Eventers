@@ -5,26 +5,19 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.akshaykant.com.eventers.databinding.ActivityMainBinding;
+import com.akshaykant.com.eventers.databinding.ActivityProfileBinding;
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
-    ActivityMainBinding binding;
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView profileImg;
-
-    private static final String TAG = "MainActivity";
-
-    //Set the value RC_SIGN_IN flag used for startActivityForResult for FirebaseUI and don't use the default value.
-    private static final int RC_SIGN_IN = 1;
+    ActivityProfileBinding binding;
 
     /*One class from Firebase Auth API*/
     private FirebaseAuth mFirebaseAuth;
@@ -35,18 +28,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        /*Instantiate the firebase auth object*/
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
+
+
+          /*Instantiate the firebase auth object*/
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        profileImg = (ImageView) findViewById(R.id.right_icon_toolbar);
-        profileImg.setOnClickListener(this);
-        binding.fab.setOnClickListener(this);
-
-       /*Instantiate new AuthStateListener*/
+           /*Instantiate new AuthStateListener*/
         //Attach and detach in onResume() and onPause()
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -56,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // user is signed in
-                    Toast.makeText(MainActivity.this, "SIGNED IN", Toast.LENGTH_LONG).show();
 
                 } else {
                     // user is signed out
@@ -74,21 +63,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
-    }
 
-    /*startActivityForResult() return onAcivityResult() with RESULT_OK or RESULT_CANCEL.
-    Here you can handle the back button pressed flow from the login page.*/
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(MainActivity.this, "Signed in!", Toast.LENGTH_LONG).show();
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(MainActivity.this, "Sign in Cancelled!", Toast.LENGTH_LONG).show();
-                finish();
-            }
+        //Get the USerInfo
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+
+        //Display the User name, Email and Image
+        binding.articleName.setText(user.getDisplayName());
+        binding.articleEmail.setText(user.getEmail());
+
+        if (user.getPhotoUrl() != null) {
+            Glide.with(binding.profilePhoto.getContext())
+                    .load(user.getPhotoUrl())
+                    .into(binding.profilePhoto);
         }
+
+        //back button functionality
+        binding.backButton.setOnClickListener(this);
+
+        //Sign out functionality
+        binding.cardViewSignOut.setOnClickListener(this);
+
     }
 
     @Override
@@ -107,14 +101,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.right_icon_toolbar){
-            Intent intent = new Intent(this, ProfileActivity.class);
+        if (view.getId() == R.id.back_button) {
+            Intent intent = new Intent(this, MainActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            return;
+        } else if (view.getId() == R.id.card_view_sign_out) {
+            //sign out
+            AuthUI.getInstance().signOut(this);
+            finish();
+        }
+    }
 
-        }
-        if(view.getId() == R.id.fab){
-            Intent intent = new Intent(this, NewEventActivity.class);
-            startActivity(intent);
-        }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+        return;
     }
 }

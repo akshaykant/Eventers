@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- The app branding color for the app bar -->
+    <color name="colorPrimary">#F0514B</color>
+
+    <!-- Darker variant for the status bar and contextual app bars -->
+    <color name="colorPrimaryDark">#C0403C</color>
+
+    <!-- Accent color for UI controls like checkboxes and text fields -->
+    <color name="colorAccent">#F0514B</color>
+
+    <color name="theme_accent">#04561A</color>
+
+    <color name="light_grey">#48618c</color>
+    <color name="grey">#dcdfe4</color>
+    <color name="pearl_white">#FFFFFF</color>
+    <color name="dark_blue">#1c499b</color>
+    <color name="green">#689f38</color>
+    <color name="blue">#2c65a4</color>
+    <color name="blueText">#13234b</color>
+    <color name="blueButton">#13234b</color>
+    <color name="red">#e91810</color>
+
+    <color name="material_light_white">#FFFFFF</color>
 </resources>
