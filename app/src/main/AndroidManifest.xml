@@ -63,6 +63,10 @@
             android:name=".gcm.RegistrationIntentService"
             android:exported="false" />
 
+        <provider
+            android:name=".data.EventProvider"
+            android:authorities="com.akshaykant.com.eventers"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(MainActivity.this, R.string.Signed_in, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, R.string.Signed_in, Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(MainActivity.this, R.string.Sign_in_cancelled, Toast.LENGTH_SHORT).show();
                 finish();
@@ -216,6 +216,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //The getValue() method can take a parameter which is a class by passing this parameter
                     //the code will deserialize the message from the database into our FriendlyMessage object.
                     Events events = dataSnapshot.getValue(Events.class);
+
+                    dataSnapshot.getKey();
+                    /*Content Provider*/
+
+
                     //add the FriendlyMessage object to our adapter.
                     mEventAdapter.add(events);
 

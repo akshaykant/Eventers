@@ -44,4 +44,6 @@
     <string name="date">DATE</string>
     <string name="time">TIME</string>
     <string name="organiser">ORGANISER</string>
+    <string name="editor_insert_event_failed">Insert Event Failed</string>
+    <string name="editor_insert_event_successful">Insert Event Successful</string>
 </resources>

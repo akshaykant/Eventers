@@ -2,8 +2,10 @@ package com.akshaykant.com.eventers;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.akshaykant.com.eventers.data.EventContract;
 import com.akshaykant.com.eventers.databinding.ActivityNewEventBinding;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -137,6 +140,21 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    //Places API on click of Location EditText
+    public void onLocationEditTextClick(View view) {
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.i(TAG, e.getMessage());
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.i(TAG, e.getMessage());
+        }
+    }
+
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.left_icon_toolbar) {
@@ -177,28 +195,41 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
                 Toast.makeText(NewEventActivity.this, R.string.successfully_added, Toast.LENGTH_SHORT).show();
 
+                /*Insert to the SQLLITE DB using Content Provider*/
+                // Create a ContentValues object where column names are the keys,
+                // and pet attributes from the editor are the values.
+                ContentValues values = new ContentValues();
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_TYPE, binding.editEventType.getText().toString());
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_LOCATION, binding.editLocation.getText().toString());
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_DATE, binding.editDate.getText().toString());
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_TIME, binding.editTime.getText().toString());
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_DRESS, binding.editDressStyle.getText().toString());
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_WEATHER, weather);
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_ORGANISER, organiser);
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_LATITUDE, latitude);
+                values.put(EventContract.EventsEntry.COLUMN_EVENT_LONGITUDE, longitude);
+
+                // Insert a new pet into the provider, returning the content URI for the new pet.
+                Uri newUri = getContentResolver().insert(EventContract.EventsEntry.CONTENT_URI, values);
+
+                // Show a toast message depending on whether or not the insertion was successful
+                if (newUri == null) {
+                    // If the new content URI is null, then there was an error with insertion.
+                    Toast.makeText(this, getString(R.string.editor_insert_event_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the insertion was successful and we can display a toast.
+                    Toast.makeText(this, getString(R.string.editor_insert_event_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
                 Intent intent = new Intent(this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 return;
 
             }
-
-
-        }
-    }
-
-    //Places API on click of Location EditText
-    public void onLocationEditTextClick(View view) {
-        try {
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-            Log.i(TAG, e.getMessage());
-        } catch (GooglePlayServicesNotAvailableException e) {
-            Log.i(TAG, e.getMessage());
         }
     }
 
@@ -213,7 +244,6 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
                 latitude = latLong.latitude;
                 longitude = latLong.longitude;
-
 
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
