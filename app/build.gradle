@@ -58,6 +58,9 @@ dependencies {
     //Places SDK
     compile 'com.google.android.gms:play-services:9.6.1'
 
+    //FCM
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+
     //Design library
     compile 'com.android.support:design:25.0.0'
 
