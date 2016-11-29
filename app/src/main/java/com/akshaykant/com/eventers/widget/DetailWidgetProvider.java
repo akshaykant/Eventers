@@ -1,17 +1,14 @@
 package com.akshaykant.com.eventers.widget;
 
-import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.net.Uri;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
-import com.akshaykant.com.eventers.MainActivity;
 import com.akshaykant.com.eventers.R;
 
 /**
@@ -19,32 +16,83 @@ import com.akshaykant.com.eventers.R;
  */
 
 public class DetailWidgetProvider extends AppWidgetProvider {
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // Perform this loop procedure for each App Widget that belongs to this provider
-        for (int appWidgetId : appWidgetIds) {
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_detail);
 
-            // Create an Intent to launch MainActivity
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
+    public static final String TOAST_ACTION = "com.akshaykant.com.eventers.TOAST_ACTION";
+    public static final String EXTRA_ITEM = "com.akshaykant.com.eventers.EXTRA_ITEM";
 
-            // Tell the AppWidgetManager to perform an update on the current app widget
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+
+    // Called when the BroadcastReceiver receives an Intent broadcast.
+    // Checks to see whether the intent's action is TOAST_ACTION. If it is, the app widget
+    // displays a Toast message for the current item.
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        if (intent.getAction().equals(TOAST_ACTION)) {
+            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
+            Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
         }
+        super.onReceive(context, intent);
     }
+
 
     @Override
-    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
-        super.onReceive(context, intent);
-        if (MainActivity.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
-                    new ComponentName(context, getClass()));
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
-        }
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
+                         int[] appWidgetIds) {
+        final int N = appWidgetIds.length;
+    /*int[] appWidgetIds holds ids of multiple instance of your widget
+     * meaning you are placing more than one widgets on your homescreen*/
+        for (int i = 0; i < N; ++i) {
 
+            // Set up the intent that starts the DetailWidgetRemoteViewsService, which will
+            // provide the views for this collection.
+            Intent intent = new Intent(context, DetailWidgetRemoteViewsService.class);
+            // Add the app widget ID to the intent extras.
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+
+            RemoteViews remoteViews = updateWidgetListView(context,
+                    appWidgetIds[i]);
+
+            // This section makes it possible for items to have individualized behavior.
+            // It does this by setting up a pending intent template. Individuals items of a collection
+            // cannot set up their own pending intents. Instead, the collection as a whole sets
+            // up a pending intent template, and the individual items set a fillInIntent
+            // to create unique behavior on an item-by-item basis.
+            Intent toastIntent = new Intent(context, DetailWidgetProvider.class);
+            // Set the action for the intent.
+            // When the user touches a particular view, it will have the effect of
+            // broadcasting TOAST_ACTION.
+            toastIntent.setAction(DetailWidgetProvider.TOAST_ACTION);
+            toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+            PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            remoteViews.setPendingIntentTemplate(R.id.widget_list, toastPendingIntent);
+            appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
+        }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-}
+    private RemoteViews updateWidgetListView(Context context, int appWidgetId) {
 
+        //which layout to show on widget
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+                R.layout.widget_detail);
+
+        //RemoteViews Service needed to provide adapter for ListView
+        Intent svcIntent = new Intent(context, DetailWidgetRemoteViewsService.class);
+        //passing app widget id to that RemoteViews Service
+        svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        //setting a unique Uri to the intent
+        svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        //setting adapter to listview of the widget
+        remoteViews.setRemoteAdapter(appWidgetId, R.id.widget_list,
+                svcIntent);
+        //setting an empty view in case of no data
+        //remoteViews.setEmptyView(R.id.widget_list, R.id.widget_empty);
+        return remoteViews;
+    }
+}
