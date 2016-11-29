@@ -12,7 +12,7 @@
 
     <dimen name="material_layout_keylines_screen_edge_margin">16dp</dimen>
 
-    <dimen name="material_layout_app_bar_height">320dp</dimen>
+    <dimen name="material_layout_app_bar_height">220dp</dimen>
     <dimen name="expanded_toolbar_title_margin_bottom">40dp</dimen>
 
     <dimen name="expanded_toolbar_height">80dp</dimen>
@@ -21,5 +21,10 @@
     <dimen name="app_bar_elevation">6dp</dimen>
 
     <dimen name="activity_margin">16dp</dimen>
+
+    <dimen name="material_component_floating_action_button_margin">16dp</dimen>
+
+    <dimen name="floating_action_button_elevation_resting">6dp</dimen>
+    <dimen name="floating_action_button_elevation_pressed">12dp</dimen>
 
 </resources>

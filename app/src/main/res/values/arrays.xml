@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="weather">
+        <item>art_clear</item>
+        <item>art_clouds</item>
+        <item>art_fog</item>
+        <item>art_light_clouds</item>
+        <item>art_light_rain</item>
+        <item>art_rain</item>
+        <item>art_snow</item>
+        <item>art_storm</item>
+    </string-array>
+</resources>

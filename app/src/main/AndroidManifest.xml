@@ -10,6 +10,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC_t5T5-Rc9zeX_1sEbw7eLsXpOTjfkmaw"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask">
@@ -19,8 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".NewEventActivity"></activity>
+
+        <activity android:name=".NewEventActivity" />
+
+        <activity android:name=".DetailEventActivity"/>
     </application>
 
 </manifest>

@@ -34,6 +34,7 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+
     <!-- Style for an EditText field in the NewEventActivity -->
     <style name="EditorFieldStyle">
         <item name="android:layout_height">wrap_content</item>

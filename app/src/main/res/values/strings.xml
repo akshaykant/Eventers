@@ -10,4 +10,5 @@
     <string name="hint_location">Location</string>
     <string name="event_dress">DRESS CODE</string>
     <string name="hint_style">Style</string>
+    <string name="navigate">Navigate</string>
 </resources>

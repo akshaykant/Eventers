@@ -12,7 +12,8 @@
     <color name="theme_accent">#04561A</color>
 
     <color name="light_grey">#48618c</color>
-    <color name="grey">#dcdfe4</color>
+    <color name="grey">#f0f1f2</color>
+    <color name="dark_grey">#979798</color>
     <color name="pearl_white">#FFFFFF</color>
     <color name="dark_blue">#1c499b</color>
     <color name="green">#689f38</color>
