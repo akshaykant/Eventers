@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "MainActivity";
 
+    public static final String ACTION_DATA_UPDATED =
+            "com.akshaykant.com.eventers.ACTION_DATA_UPDATED";
+
     //Set the value RC_SIGN_IN flag used for startActivityForResult for FirebaseUI and don't use the default value.
     private static final int RC_SIGN_IN = 1;
 
@@ -217,12 +220,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //the code will deserialize the message from the database into our FriendlyMessage object.
                     Events events = dataSnapshot.getValue(Events.class);
 
-                    dataSnapshot.getKey();
-                    /*Content Provider*/
-
 
                     //add the FriendlyMessage object to our adapter.
                     mEventAdapter.add(events);
+
+                    //WIDGET
+                    // Setting the package ensures that only components in our app will receive the broadcast
+                    Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                            .setPackage(getApplicationContext().getPackageName());
+                    getApplicationContext().sendBroadcast(dataUpdatedIntent);
 
                     // Initialize progress bar
                     binding.progressBar.setVisibility(ProgressBar.INVISIBLE);

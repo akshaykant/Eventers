@@ -20,7 +20,15 @@
     <color name="blue">#2c65a4</color>
     <color name="blueText">#13234b</color>
     <color name="blueButton">#13234b</color>
-    <color name="red">#e91810</color>
+    <color name="red">#f9aba8</color>
+    <color name="white">#FFFFFF</color>
+    <!-- the activated state color -->
+    <color name="activated">#E0E0E0</color>
+
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+
+    <color name="forecast_low_text">#607D8B</color>
 
     <color name="material_light_white">#FFFFFF</color>
 </resources>

@@ -46,4 +46,7 @@
     <string name="organiser">ORGANISER</string>
     <string name="editor_insert_event_failed">Insert Event Failed</string>
     <string name="editor_insert_event_successful">Insert Event Successful</string>
+    <string name="empty_forecast_list">No Weather Information Available</string>
+    <string name="_17_12_16">17/12/16</string>
+    <string name="title_widget_detail">EVENTS DETAIL</string>
 </resources>

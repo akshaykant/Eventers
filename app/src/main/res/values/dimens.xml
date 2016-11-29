@@ -27,4 +27,16 @@
     <dimen name="floating_action_button_elevation_resting">6dp</dimen>
     <dimen name="floating_action_button_elevation_pressed">12dp</dimen>
 
+    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="list_icon">40dp</dimen>
+
+    <dimen name="forecast_widget_text_width">38dp</dimen>
+    <dimen name="forecast_widget_text_size">24dp</dimen>
+    <dimen name="forecast_temperature_space">8dp</dimen>
+
+    <dimen name="widget_detail_default_width">250dp</dimen>
+    <dimen name="widget_detail_default_height">180dp</dimen>
+    <dimen name="widget_detail_min_resize_width">220dp</dimen>
+    <dimen name="widget_detail_min_resize_height">@dimen/widget_detail_default_height</dimen>
 </resources>
