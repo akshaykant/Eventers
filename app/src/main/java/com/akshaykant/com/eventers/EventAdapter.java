@@ -19,6 +19,11 @@ import java.util.List;
 
 public class EventAdapter extends ArrayAdapter<Events> {
 
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String ORGANISER = "ORGANISER";
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String INVITEE = "INVITEE";
+
     public EventAdapter(Context context, int resource, List<Events> objects) {
         super(context, resource, objects);
     }
@@ -45,9 +50,9 @@ public class EventAdapter extends ArrayAdapter<Events> {
         eventTime.setText(events.getTime());
 
         if (events.getOrganiser() != null && events.getOrganiser().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            isOrganiser.setText("ORGANISER");
+            isOrganiser.setText(ORGANISER);
         } else {
-            isOrganiser.setText("INVITEE");
+            isOrganiser.setText(INVITEE);
         }
 
         return convertView;

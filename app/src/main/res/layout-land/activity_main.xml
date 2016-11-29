@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -15,17 +14,17 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            android:background="@color/grey">
 
             <ListView
                 android:id="@+id/eventListView"
                 android:layout_width="@dimen/max_width"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:divider="@android:color/transparent"
                 android:transcriptMode="alwaysScroll"
-                tools:listitem="@layout/item_event"
-                android:layout_gravity="center_horizontal"/>
+                tools:listitem="@layout/item_event" />
 
         </FrameLayout>
 
@@ -36,6 +35,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/create_a_new_event"
             android:src="@drawable/fab_plus" />
 
         <ProgressBar
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 </layout>

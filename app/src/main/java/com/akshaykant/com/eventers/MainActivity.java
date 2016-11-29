@@ -29,12 +29,17 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String EVENTS = "events";
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String EVENT = "event";
     ActivityMainBinding binding;
 
     ImageView profileImg;
 
     private EventAdapter mEventAdapter;
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "MainActivity";
 
     //Set the value RC_SIGN_IN flag used for startActivityForResult for FirebaseUI and don't use the default value.
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         //getting reference to the specific part of the database.
         // getReference() will get the reference to the root, while child() will refer to the specific part i.e. "events"
-        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("events");
+        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child(EVENTS);
 
         profileImg = (ImageView) findViewById(R.id.right_icon_toolbar);
         profileImg.setOnClickListener(this);
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Intent intent = new Intent(MainActivity.this, DetailEventActivity.class);
                 Object object = parent.getAdapter().getItem(position);
-                intent.putExtra("event", (Serializable) object);
+                intent.putExtra(EVENT, (Serializable) object);
                 startActivity(intent);
 
             }
@@ -135,9 +140,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(MainActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Signed_in, Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(MainActivity.this, "Sign in Cancelled!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.Sign_in_cancelled, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

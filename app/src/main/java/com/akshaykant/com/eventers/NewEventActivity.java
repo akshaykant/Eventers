@@ -33,6 +33,10 @@ import java.util.Random;
 
 public class NewEventActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String EVENTS = "events";
+    @SuppressWarnings("HardCodedStringLiteral")
+    private static final String MM_DD_YY = "MM/dd/yy";
     ActivityNewEventBinding binding;
     ImageView rightToolbarIcon;
     ImageView leftToolbarIcon;
@@ -43,6 +47,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
     double longitude;
 
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "NewEventActivity";
 
     //For Places API
@@ -65,13 +70,13 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         //getting reference to the specific part of the database.
         // getReference() will get the reference to the root, while child() will refer to the specific part i.e. "events"
-        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("events");
+        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child(EVENTS);
 
         rightToolbarIcon = (ImageView) findViewById(R.id.right_icon_toolbar);
         leftToolbarIcon = (ImageView) findViewById(R.id.left_icon_toolbar);
         centerToolbarText = (TextView) findViewById(R.id.center_text_toolbar);
 
-        centerToolbarText.setText("Create Event");
+        centerToolbarText.setText(R.string.create_event);
         leftToolbarIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_black));
         rightToolbarIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
 
@@ -119,7 +124,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                         binding.editTime.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getString(R.string.select_time));
                 mTimePicker.show();
             }
         });
@@ -147,7 +152,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                     && TextUtils.isEmpty(binding.editDate.getText().toString()) && TextUtils.isEmpty(binding.editTime.getText().toString())
                     && TextUtils.isEmpty(binding.editDressStyle.getText().toString())) {
 
-                Toast.makeText(NewEventActivity.this, "EMPTY FIELD!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewEventActivity.this, R.string.empty_fields, Toast.LENGTH_SHORT).show();
 
 
             } else {
@@ -170,7 +175,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
                 are extremely unlikely to generate identical IDs.*/
                 mMessagesDatabaseReference.push().setValue(events);
 
-                Toast.makeText(NewEventActivity.this, "Successfully Added!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewEventActivity.this, R.string.successfully_added, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -202,7 +207,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                Log.i(TAG, "Place: " + place.getName());
+                Log.i(TAG, getString(R.string.place) + place.getName());
                 binding.editLocation.setText(place.getName());
                 LatLng latLong = place.getLatLng();
 
@@ -223,7 +228,7 @@ public class NewEventActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateLabel() {
 
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = MM_DD_YY; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         binding.editDate.setText(sdf.format(myCalendar.getTime()));

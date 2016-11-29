@@ -25,6 +25,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/event_image_depicts_happiness"
                 android:src="@drawable/ic_quoteflower"/>
 
 
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="TAJ PALACE"
+                    android:text="@string/taj_palace"
                     android:textColor="@color/dark_grey" />
 
                 <TextView
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/article_event_location"
                     android:padding="5dp"
-                    android:text="DATE"
+                    android:text="@string/date"
                     android:textColor="@color/dark_grey" />
 
                 <TextView
@@ -61,7 +62,7 @@
                     android:layout_below="@+id/article_event_location"
                     android:layout_toRightOf="@+id/article_event_date"
                     android:padding="5dp"
-                    android:text="TIME"
+                    android:text="@string/time"
                     android:textColor="@color/dark_grey" />
             </RelativeLayout>
 
@@ -74,7 +75,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
-                android:text="BIRTHDAY"
+                android:text="@string/birthday"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -84,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:padding="10dp"
-                android:text="ORGANISER"
+                android:text="@string/organiser"
 
                 android:textColor="@android:color/black"
                 android:layout_marginLeft="10dp"

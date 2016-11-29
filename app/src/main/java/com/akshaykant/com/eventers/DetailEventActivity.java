@@ -12,6 +12,7 @@ import android.view.View;
 import com.akshaykant.com.eventers.databinding.ActivityDetailEventBinding;
 import com.bumptech.glide.Glide;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class DetailEventActivity extends AppCompatActivity implements View.OnClickListener {
 
     ActivityDetailEventBinding binding;
