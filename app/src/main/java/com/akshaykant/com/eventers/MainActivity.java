@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "MainActivity";
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final String ACTION_DATA_UPDATED =
             "com.akshaykant.com.eventers.ACTION_DATA_UPDATED";
 

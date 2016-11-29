@@ -12,12 +12,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class RegistrationIntentService extends IntentService {
 
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "RegIntentService";
 
     public RegistrationIntentService() {
         super(TAG);
     }
 
+    @SuppressWarnings("HardCodedStringLiteral")
     @Override
     protected void onHandleIntent(Intent intent) {
 

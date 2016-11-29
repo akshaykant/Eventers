@@ -10,6 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  */
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String TAG = "MyFirebaseIIDService";
 
     /**

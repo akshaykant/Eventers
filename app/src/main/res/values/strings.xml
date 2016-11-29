@@ -49,4 +49,5 @@
     <string name="empty_forecast_list">No Weather Information Available</string>
     <string name="_17_12_16">17/12/16</string>
     <string name="title_widget_detail">EVENTS DETAIL</string>
+    <string name="latitude_longitude">latLng</string>
 </resources>

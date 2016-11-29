@@ -10,6 +10,7 @@ import static android.R.attr.version;
  * Created by Akshay Kant on 29-11-2016.
  */
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class EventDBHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = EventDBHelper.class.getSimpleName();

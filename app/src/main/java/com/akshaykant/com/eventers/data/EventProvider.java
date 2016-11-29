@@ -230,6 +230,7 @@ public class EventProvider extends ContentProvider {
         long id = database.insert(EventContract.EventsEntry.TABLE_NAME, null, values);
         // If the ID is -1, then the insertion failed. Log an error and return null.
         if (id == -1) {
+            //noinspection HardCodedStringLiteral
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }

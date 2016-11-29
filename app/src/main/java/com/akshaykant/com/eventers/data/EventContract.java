@@ -8,6 +8,7 @@ import android.provider.BaseColumns;
  * Created by Akshay Kant on 29-11-2016.
  */
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class EventContract {
     /**
      * The "Content authority" is a name for the entire content provider, similar to the
@@ -15,12 +16,14 @@ public class EventContract {
      * content authority is the package name for the app, which is guaranteed to be unique on the
      * device.
      */
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final String CONTENT_AUTHORITY = "com.akshaykant.com.eventers";
 
     /**
      * Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
      * the content provider.
      */
+    @SuppressWarnings("HardCodedStringLiteral")
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     /**
